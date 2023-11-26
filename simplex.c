@@ -9,24 +9,48 @@
 #define EPSILON 1E-8 //Tolerância do erro
 
 int AIM, NV, NVNN, NVNP, NVUR, NC, NV0, NN[MAX_VARIABLES], NP[MAX_VARIABLES], UR[MAX_VARIABLES], OPTIMAL, COUNT;
+/*
+    AIM: função objetivo (min/max)
+    NV: número de variáveis
+    NVNN: número de variáveis não negativas
+    NVNP: número de variáveis não positivas
+    NVUR: número de variáveis irrestritas
+    NC: número de restrições
+    NV0: número de variáveis originais
+    NN: variáveis não negativas
+    NP: variáveis não positivas
+    UR: variáveis irrestritas
+    OPTIMAL: indicador de solução ótima
+    COUNT: contador de iterações
+*/
 int BASIC[MAX_VARIABLES], LB[MAX_ITERATIONS], EB[MAX_ITERATIONS];
-double C[MAX_VARIABLES], V[MAX_VARIABLES], CTemp[MAX_VARIABLES];
-double A[MAX_CONSTRAINTS][MAX_VARIABLES], b[MAX_CONSTRAINTS][1], ATemp[MAX_CONSTRAINTS][MAX_VARIABLES];
+/*
+    BASIC: variáveis básicas
+    LB: variáveis que deixam a base
+    EB: variáveis que entram na base
+*/
+double C[MAX_VARIABLES], V[MAX_VARIABLES], CTemp[MAX_VARIABLES], A[MAX_CONSTRAINTS][MAX_VARIABLES], b[MAX_CONSTRAINTS][1], ATemp[MAX_CONSTRAINTS][MAX_VARIABLES];
+/*
+    C: coeficientes da função objetivo
+    V: sinal das variáveis
+    CTemp: coeficientes da função objetivo temporários
+    A: coeficientes das restrições
+    b: lado direito das restrições
+    ATemp: coeficientes das restrições temporários
+*/
 int CONSYMBOL[MAX_CONSTRAINTS][1];
 int PI, PJ;
-// PI: the row index of pivot 
-// PJ: the column index of pivot
-int COUNT, STATE; 
-// COUNT: count of iteration in simplex method 
-// STATE: the indicator of Phase I or Phase II
+// PI: A linha index do pivot
+// PJ: A coluna index do pivot
+int STATE; 
+// STATE: Indicador de primeira ou segunda fase
 double Z = 0; 
-// Z: objective value
+// Z: valor objetivo
 double CSIGN; 
-// CSIGN: control the sign of objective function based on the problem aim (min/max)
-
+// CSIGN: controla o sinal da função objetivo baseado em AIM
 
 void defineObjetivo() {
-    printf("\nA função objetivo é MAX(1) ou MIN(2) ? ");
+    printf("\nA função objetivo será MAX(1) ou MIN(2) ? ");
     printf("\nPor favor, insira 1 para MAX ou 2 para MIN:  ");
     scanf("%d", &AIM);
     while (AIM != 1 && AIM != 2) {
